@@ -12,5 +12,13 @@ namespace Tourism.API.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public CompanyType CompanyType { get; set; }
+        public int NumberOfAvailableTourPackages 
+        {
+            get
+            {
+                return TourPackages.Count;
+            }
+        }
+        public ICollection<TourPackageDTO> TourPackages { get; set; } = new List<TourPackageDTO>();
     }
 }
