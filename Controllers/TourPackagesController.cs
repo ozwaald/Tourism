@@ -86,5 +86,41 @@ namespace Tourism.API.Controllers
                 new { companyId, id = finalTourPackage.Id },
                 finalTourPackage);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateTourPackage(int companyId, int id,
+                                               [FromBody] TourPackageForCreationDTO tourPackage)
+        {
+            if (tourPackage.Description == tourPackage.Name)
+            {
+                ModelState.AddModelError(
+                    "Description",
+                    "The provided description should be different from the name. Please make amendments");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var company = CompaniesDataStore.Current.Companies.FirstOrDefault(c => c.Id == companyId);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            var tourPackageFromStore = company.TourPackages.FirstOrDefault(t => t.Id == id);
+
+            if (tourPackageFromStore == null)
+            {
+                return NotFound();
+            }
+
+            tourPackageFromStore.Name = tourPackage.Name;
+            tourPackageFromStore.Description = tourPackage.Description;
+
+            return NoContent();
+        }
     }
 }
