@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tourism.API.Models
 {
-    public class TourPackageCreationDTO
+    public class TourPackageForCreationDTO
     {
         [Required(ErrorMessage = "Please provide the name of the tour package.")]
         [MaxLength(50)]

@@ -47,7 +47,7 @@ namespace Tourism.API.Controllers
 
         [HttpPost]
         public IActionResult CreateTourPackage(int companyId, 
-                                              [FromBody] TourPackageCreationDTO tourPackage)
+                                              [FromBody] TourPackageForCreationDTO tourPackage)
         {
             if (tourPackage.Description == tourPackage.Name)
             {
