@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tourism.Logic;
 
 namespace Tourism.API
 {
@@ -17,6 +18,8 @@ namespace Tourism.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            LogicServicesContainer.Register(services);
+
             services.AddMvc();
                 //.AddMvcOptions(o =>
                 //{

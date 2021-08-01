@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tourism.Data;
 using Tourism.Data.Models;
+using Tourism.Logic.Interfaces;
+using Tourism.Logic.Services;
 
 namespace Tourism.API.Controllers
 {
@@ -15,17 +18,36 @@ namespace Tourism.API.Controllers
     [Route("api/companies/{companyId}/[controller]")]
     public class TourPackagesController : ControllerBase
     {
+        private readonly ILogger<TourPackagesController> logger;
+        private readonly IMailService mailService;
+
+        public TourPackagesController(ILogger<TourPackagesController> logger,
+                                      IMailService mailService)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+        }
+
         [HttpGet]
         public IActionResult GetTourPackages(int companyId)
         {
-            var company = CompaniesDataStore.Current.Companies.FirstOrDefault(c => c.Id == companyId);
-
-            if (company == null)
+            try
             {
-                return NotFound();
-            }
+                var company = CompaniesDataStore.Current.Companies.FirstOrDefault(c => c.Id == companyId);
 
-            return Ok(company.TourPackages);
+                if (company == null)
+                {
+                    logger.LogInformation($"The company with id {companyId} wasn't found.");
+                    return NotFound();
+                }
+
+                return Ok(company.TourPackages);
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical($"Exception while getting tour packages with company id {companyId}", ex);
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
         }
 
         [HttpGet("{id}", Name = "GetTourPackage")]
@@ -196,6 +218,9 @@ namespace Tourism.API.Controllers
             }
 
             company.TourPackages.Remove(tourPackageFromStore);
+
+            mailService.Send("Tour package is deleted.",
+                             $"Tour package \"{tourPackageFromStore.Name}\" with id \"{tourPackageFromStore.Id}\" was deleted.");
 
             return NoContent();
         }
