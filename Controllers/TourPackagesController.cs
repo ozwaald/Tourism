@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tourism.Contracts.DTOs;
 using Tourism.Data;
 using Tourism.Data.Models;
 using Tourism.Logic.Interfaces;
