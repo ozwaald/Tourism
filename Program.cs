@@ -19,8 +19,6 @@ namespace Tourism.API
                                 .GetCurrentClassLogger();
             try
             {
-                
-
                 logger.Info("Initializing application...");
 
                 CreateHostBuilder(args).Build().Run();

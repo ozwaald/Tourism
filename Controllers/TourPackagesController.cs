@@ -222,6 +222,8 @@ namespace Tourism.API.Controllers
             mailService.Send("Tour package is deleted.",
                              $"Tour package \"{tourPackageFromStore.Name}\" with id \"{tourPackageFromStore.Id}\" was deleted.");
 
+            logger.LogInformation($"The tour package \"{tourPackageFromStore.Name}\" was deleted from company \"{company.Name}\".");
+
             return NoContent();
         }
     }
