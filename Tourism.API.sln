@@ -4,10 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tourism.API", "Tourism.API.csproj", "{73D54769-A0E1-40D8-8138-2CDF4CA479BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B5493645-CF9E-46EC-A31A-D19DEA057373} = {B5493645-CF9E-46EC-A31A-D19DEA057373}
+		{74F4C74C-11EB-4429-A252-3E95CB38EDAD} = {74F4C74C-11EB-4429-A252-3E95CB38EDAD}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tourism.Data", "..\Tourism.Data\Tourism.Data.csproj", "{74F4C74C-11EB-4429-A252-3E95CB38EDAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tourism.Logic", "..\Tourism.Logic\Tourism.Logic.csproj", "{B5493645-CF9E-46EC-A31A-D19DEA057373}"
+	ProjectSection(ProjectDependencies) = postProject
+		{74F4C74C-11EB-4429-A252-3E95CB38EDAD} = {74F4C74C-11EB-4429-A252-3E95CB38EDAD}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
